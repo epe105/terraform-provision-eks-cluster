@@ -5,6 +5,10 @@ provider "aws" {
   region = var.region
 }
 
+#provider "kubernetes" {
+#  # Configuration options
+#}
+
 # Filter out local zones, which are not currently supported 
 # with managed node groups
 
@@ -120,3 +124,42 @@ resource "aws_eks_addon" "ebs-csi" {
   }
 }
 
+#resource "kubernetes_manifest" "role" {
+#  manifest = {
+#    apiVersion = "rbac.authorization.k8s.io/v1"
+#    kind       = "Role"
+#    metadata = {
+#      name      = "default"
+#      namespace = "default"
+#    }
+#    rules = [
+#      {
+#        apiGroups = ["'", "apps", "extensions"],
+#        resources = ["deployments", "pods", "services", "secrets", "pods/log"],
+#        verbs     = ["get", "list", "watch", "create", "update", "patch", "delete"]
+#      }
+#    ]
+#  }
+#}
+
+#resource "kubernetes_manifest" "role_binding" {
+#  manifest = {
+#    apiVersion = "rbac.authorization.k8s.io/v1"
+#    kind       = "RoleBinding"
+#    metadata = {
+#      name      = "default-rolebinding"
+#    }
+#    subjects = [
+#      {
+#        kind      = "ServiceAccount"
+#        name      = "default"
+#        namespace = "default"
+#      }
+#    ]
+#    roleRef = {
+#      kind     = "ClusterRole"
+#      name     = "cluster-admin"
+#      apiGroup = "rbac.authorization.k8s.io"
+#    }
+#  }
+#}
